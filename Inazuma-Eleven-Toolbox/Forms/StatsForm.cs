@@ -132,7 +132,6 @@ namespace Inazuma_Eleven_Toolbox.Forms
                 ushort MaxTP = BitConverter.ToUInt16(StatsBlock.Skip(0xA).Take(2).ToArray(), 0);
                 byte TPgrowthRate = StatsBlock[0xC];
 
-                 /* Calculo nazi uwu */
                 ushort MinKick = StatsBlock[0x10];
                 ushort MaxKick = StatsBlock[0x11];
                 ushort MinBody = StatsBlock[0x14];

@@ -101,6 +101,34 @@
     </Compile>
     <Compile Include="Logic\EXP.cs" />
     <Compile Include="Logic\Player.cs" />
+    <Compile Include="Logic\SPEC\ISpecBase.cs" />
+    <Compile Include="Logic\SPEC\SpecDFLlaveMDDefensivo.cs" />
+    <Compile Include="Logic\SPEC\SpecDFLlaveMDOfensivo.cs" />
+    <Compile Include="Logic\SPEC\SpecDlControl.cs" />
+    <Compile Include="Logic\SPEC\SpecDLLlaveDL.cs" />
+    <Compile Include="Logic\SPEC\SpecDLLlaveMD.cs" />
+    <Compile Include="Logic\SPEC\SpecDLLlaveMDFísico.cs" />
+    <Compile Include="Logic\SPEC\SpecDlTradicional.cs" />
+    <Compile Include="Logic\SPEC\SpecDlValor.cs" />
+    <Compile Include="Logic\SPEC\SpecMEPC.cs" />
+    <Compile Include="Logic\SPEC\SpecMetodoLeo.cs" />
+    <Compile Include="Logic\SPEC\SpecPorteroFull.cs" />
+    <Compile Include="Logic\SPEC\SpecPorteros.cs" />
+    <Compile Include="Logic\SPEC\SpecPorterosLeo.cs" />
+    <Compile Include="Logic\STRAT\IStratBase.cs" />
+    <Compile Include="Logic\STRAT\StratDFLlaveMDDefensivo.cs" />
+    <Compile Include="Logic\STRAT\StratDFLlaveMDOfensivo.cs" />
+    <Compile Include="Logic\STRAT\StratDlControl.cs" />
+    <Compile Include="Logic\STRAT\StratDLLlaveDL.cs" />
+    <Compile Include="Logic\STRAT\StratDLLlaveMD.cs" />
+    <Compile Include="Logic\STRAT\StratDLLlaveMDFísico.cs" />
+    <Compile Include="Logic\STRAT\StratDlTradicional.cs" />
+    <Compile Include="Logic\STRAT\StratDlValor.cs" />
+    <Compile Include="Logic\STRAT\StratMEPC.cs" />
+    <Compile Include="Logic\STRAT\StratMetodoLeo.cs" />
+    <Compile Include="Logic\STRAT\StratPorteroFull.cs" />
+    <Compile Include="Logic\STRAT\StratPorterosLeo.cs" />
+    <Compile Include="Logic\STRAT\StratPorteros.cs" />
     <Compile Include="Logic\TextDecoder.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
