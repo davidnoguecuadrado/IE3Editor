@@ -15,7 +15,7 @@ namespace Inazuma_Eleven_Toolbox.Logic.SPEC
 
         public bool IsValid(string type)
         {
-            return type == "Portero Leo";
+            return type == "Porteros Leo";
         }
     }
 }

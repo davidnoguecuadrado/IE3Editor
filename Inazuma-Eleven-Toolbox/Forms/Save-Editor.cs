@@ -16,6 +16,7 @@ using Inazuma_Eleven_Toolbox.Logic;
 using static Inazuma_Eleven_Toolbox.Logic.PlayerClass;
 using Inazuma_Eleven_Toolbox.Logic.STRAT;
 using Inazuma_Eleven_Toolbox.Logic.SPEC;
+using Inazuma_Eleven_Toolbox.DTO;
 
 namespace Inazuma_Eleven_Toolbox.Forms
 {
@@ -23,6 +24,8 @@ namespace Inazuma_Eleven_Toolbox.Forms
     {
 
         Dictionary<IStratBase, ISpecBase> Estrategias = new Dictionary<IStratBase, ISpecBase>();
+
+        Heaven heaven = new Heaven();
 
         public Save_Editor()
         {
@@ -61,9 +64,6 @@ namespace Inazuma_Eleven_Toolbox.Forms
 
             IStratBase stratPorterosLeo = new StratPorterosLeo();
             ISpecBase specPorterosLeo = new SpecPorterosLeo();
-            
-            IStratBase stratPorteros = new StratPorteros();
-            ISpecBase specPorteros = new SpecPorteros();
 
             Estrategias.Add(stratDlTradicional, specDlTradicional);
             Estrategias.Add(stratDlValor, specDlValor);
@@ -77,23 +77,12 @@ namespace Inazuma_Eleven_Toolbox.Forms
             Estrategias.Add(stratMetodoLeo, specMetodoLeo);
             Estrategias.Add(stratPorteroFull, specPorteroFull);
             Estrategias.Add(stratPorterosLeo, specPorterosLeo);
-            Estrategias.Add(stratPorteros, specPorteros);
 
             InitializeComponent();
         }
 
-
-        ushort MaxKick99 = 0;
-        ushort MaxBody99 = 0;
-        ushort MaxGuard99 = 0;
-        ushort MaxControl99 = 0;
-        ushort MaxSpeed99 = 0;
-        ushort MaxGuts99 = 0;
-        ushort MaxStamina99 = 0;
-
         ushort Maxtotal99 = 0;
         ushort StatsTotal99 = 0;
-        short Freedom99 = 0; // has to be signed since in IE3 it can be negative      
 
         public int PrestigePointsOffset = 0;
         public int FriendshipPointsOffset = 0;
@@ -553,15 +542,10 @@ namespace Inazuma_Eleven_Toolbox.Forms
                 SetMoveLevels(numericUpDown6, Move6EvolveType, moveLevel[5]);
 
 
-                ushort MinKick = block[0x10];
                 ushort MaxKick = block[0x11];
-                ushort MinBody = block[0x14];
                 ushort MaxBody = block[0x15];
-                ushort MinGuard = block[0x18];
                 ushort MaxGuard = block[0x19];
-                ushort MinControl = block[0x1C];
                 ushort MaxControl = block[0x1D];
-                ushort MinSpeed = block[0x20];
                 ushort MaxSpeed = block[0x21];
                 ushort MinGuts = block[0x24];
                 ushort MaxGuts = block[0x25];
@@ -606,12 +590,6 @@ namespace Inazuma_Eleven_Toolbox.Forms
                 byte[] NameBlock = new byte[UnitBaseLengthPerBlock];
                 byte[] StatsBlock = new byte[UnitStatsLengthBlock];
 
-
-
-
-
-
-                ////////
                 string FullPlayerName = "";
                 string PlayerNickName = "";
 
@@ -628,18 +606,18 @@ namespace Inazuma_Eleven_Toolbox.Forms
                         StatsBlock = StatsFile.Skip((i / UnitBaseLengthPerBlock) * UnitStatsLengthBlock).Take(UnitStatsLengthBlock).ToArray();
                         Cryptography.Decrypt(ref StatsBlock);
 
-                         MaxKick99 = StatsBlock[0x11];
-                         MaxBody99 = StatsBlock[0x15];
-                         MaxGuard99 = StatsBlock[0x19];
-                         MaxControl99 = StatsBlock[0x1D];
-                         MaxSpeed99 = StatsBlock[0x21];
-                         MaxGuts99 = StatsBlock[0x25];
-                         MaxStamina99 = StatsBlock[0x29];
 
-                        Maxtotal99 = BitConverter.ToUInt16(StatsBlock.Skip(0x3C).Take(2).ToArray(), 0);
 
-                        StatsTotal99 = (ushort)(MaxKick99 + MaxBody99 + MaxGuard99 + MaxControl99 + MaxSpeed99 + MaxGuts99 + MaxStamina99);
-                        Freedom99 = (short)(Maxtotal99 - StatsTotal99); // has to be signed since in IE3 it can be negative      
+                        heaven.Tiro = StatsBlock[0x11];
+                        heaven.Fisico = StatsBlock[0x15];
+                        heaven.Defensa = StatsBlock[0x19];
+                        heaven.Control = StatsBlock[0x1D];
+                        heaven.Rapidez = StatsBlock[0x21];
+                        heaven.Valor = StatsBlock[0x25];
+                        heaven.Aguante = StatsBlock[0x29];
+
+                        heaven.SumStat = BitConverter.ToUInt16(StatsBlock.Skip(0x3C).Take(2).ToArray(), 0);
+                        heaven.Libertad = (short)(Maxtotal99 - StatsTotal99); // has to be signed since in IE3 it can be negative      
                     }
                         
 
@@ -1231,11 +1209,25 @@ namespace Inazuma_Eleven_Toolbox.Forms
 
         private void comboBox7_SelectedIndexChanged(object sender, EventArgs e)
         {
-         
-                Estrategias
-                .Where(x => x.Value.IsValid(comboBox7.Text))
-                .Select(x=> x.Key.Execute());
-           
+
+                HeavenReturn response = new HeavenReturn();
+
+                foreach (var item in Estrategias)
+                {
+                    if (item.Value.IsValid(comboBox7.Text)) {
+                        response = item.Key.Execute(heaven);
+                        break;
+                    }
+                }
+                numericUpDown8.Value = response.Tiro;
+                numericUpDown9.Value = response.Fisico;
+                numericUpDown10.Value = response.Control;
+                numericUpDown11.Value = response.Defensa;
+                numericUpDown12.Value = response.Rapidez;
+                numericUpDown13.Value = response.Aguante;
+                numericUpDown14.Value = response.Valor;
+                
+                SetAttrivutes(DataGridviewIndexFromCell(dataGridView1.CurrentRow.Index));
         }
 
         private void button10_Click(object sender, EventArgs e)
@@ -1244,6 +1236,12 @@ namespace Inazuma_Eleven_Toolbox.Forms
         }
 
         private void textBox22_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+
+        private void CambiarJugador(Int32 Player)
         {
 
         }

@@ -30,9 +30,9 @@ namespace Inazuma_Eleven_Toolbox.Forms
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -324,10 +324,8 @@ namespace Inazuma_Eleven_Toolbox.Forms
             "DF Llave MD Ofensivo",
             "DF Llave MD Defensivo",
             "Método Leo",
-            "Portero Full",
-            "Porteros Leo",
-            "Porteros",
-            "MEX"});
+            "Portero LLave DL",
+            "Porteros Leo"});
             this.comboBox7.Location = new System.Drawing.Point(281, 11);
             this.comboBox7.Name = "comboBox7";
             this.comboBox7.Size = new System.Drawing.Size(112, 21);
@@ -1290,9 +1288,9 @@ namespace Inazuma_Eleven_Toolbox.Forms
             // 
             // Column4
             // 
-            dataGridViewCellStyle1.Format = "N0";
-            dataGridViewCellStyle1.NullValue = null;
-            this.Column4.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle4.Format = "N0";
+            dataGridViewCellStyle4.NullValue = null;
+            this.Column4.DefaultCellStyle = dataGridViewCellStyle4;
             this.Column4.HeaderText = "Level";
             this.Column4.MaxInputLength = 2;
             this.Column4.Name = "Column4";
@@ -1372,18 +1370,18 @@ namespace Inazuma_Eleven_Toolbox.Forms
             // 
             // Column6
             // 
-            dataGridViewCellStyle2.Format = "N0";
-            dataGridViewCellStyle2.NullValue = null;
-            this.Column6.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle5.Format = "N0";
+            dataGridViewCellStyle5.NullValue = null;
+            this.Column6.DefaultCellStyle = dataGridViewCellStyle5;
             this.Column6.HeaderText = "Amount";
             this.Column6.MaxInputLength = 2;
             this.Column6.Name = "Column6";
             // 
             // Column7
             // 
-            dataGridViewCellStyle3.Format = "X2";
-            dataGridViewCellStyle3.NullValue = null;
-            this.Column7.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle6.Format = "X2";
+            dataGridViewCellStyle6.NullValue = null;
+            this.Column7.DefaultCellStyle = dataGridViewCellStyle6;
             this.Column7.HeaderText = "HEX ID";
             this.Column7.Name = "Column7";
             this.Column7.ReadOnly = true;
