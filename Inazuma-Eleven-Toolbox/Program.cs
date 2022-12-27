@@ -11,6 +11,7 @@ namespace Inazuma_Eleven_Toolbox
     {
         /// <summary>
         /// The main entry point for the application.
+        /// DNC
         /// </summary>
         [STAThread]
         static void Main()

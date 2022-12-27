@@ -13,15 +13,76 @@ using System.Windows.Forms;
 using Inazuma_Eleven_Toolbox.Dictionaries.ENG;
 using Inazuma_Eleven_Toolbox.Forms._Save_Editor.Config;
 using Inazuma_Eleven_Toolbox.Logic;
+using static Inazuma_Eleven_Toolbox.Logic.PlayerClass;
+using Inazuma_Eleven_Toolbox.Logic.STRAT;
+using Inazuma_Eleven_Toolbox.Logic.SPEC;
+using Inazuma_Eleven_Toolbox.DTO;
 
 namespace Inazuma_Eleven_Toolbox.Forms
 {
     public partial class Save_Editor : Form
     {
+
+        Dictionary<IStratBase, ISpecBase> Estrategias = new Dictionary<IStratBase, ISpecBase>();
+
+        Heaven heaven = new Heaven();
+
         public Save_Editor()
         {
+            ISpecBase specDlValor = new SpecDlValor();
+            IStratBase stratDlValor = new StratDlValor();
+            
+            IStratBase stratDlTradicional = new StratDlTradicional();
+            ISpecBase specDlTradicional = new SpecDlTradicional();
+
+            IStratBase stratDlControl = new StratDlControl();
+            ISpecBase specDlControl = new SpecDlControl();
+
+            IStratBase stratDLLlaveDL = new StratDLLlaveDL();
+            ISpecBase specDLLlaveDL = new SpecDLLlaveDL();
+
+            IStratBase stratDLLlaveMD = new StratDLLlaveMD();
+            ISpecBase specDLLlaveMD = new SpecDLLlaveMD();
+
+            IStratBase stratDLLlaveMDFísico = new StratDLLlaveMDFísico();
+            ISpecBase specDLLlaveMDFísico = new SpecDLLlaveMDFísico();
+
+            IStratBase stratMEPC = new StratMEPC();
+            ISpecBase specMEPC = new SpecMEPC();
+
+            IStratBase stratDFLlaveMDOfensivo = new StratDFLlaveMDOfensivo();
+            ISpecBase specDFLlaveMDOfensivo = new SpecDFLlaveMDOfensivo();
+
+            IStratBase stratDFLlaveMDDefensivo = new StratDFLlaveMDDefensivo();
+            ISpecBase specDFLlaveMDDefensivo = new SpecDFLlaveMDDefensivo();
+
+            IStratBase stratMetodoLeo = new StratMetodoLeo();
+            ISpecBase specMetodoLeo = new SpecMetodoLeo();
+
+            IStratBase stratPorteroFull = new StratPorteroFull();
+            ISpecBase specPorteroFull = new SpecPorteroFull();
+
+            IStratBase stratPorterosLeo = new StratPorterosLeo();
+            ISpecBase specPorterosLeo = new SpecPorterosLeo();
+
+            Estrategias.Add(stratDlTradicional, specDlTradicional);
+            Estrategias.Add(stratDlValor, specDlValor);
+            Estrategias.Add(stratDlControl, specDlControl);
+            Estrategias.Add(stratDLLlaveDL, specDLLlaveDL); 
+            Estrategias.Add(stratDLLlaveMD, specDLLlaveMD);
+            Estrategias.Add(stratDLLlaveMDFísico, specDLLlaveMDFísico);
+            Estrategias.Add(stratMEPC, specMEPC);
+            Estrategias.Add(stratDFLlaveMDOfensivo, specDFLlaveMDOfensivo);
+            Estrategias.Add(stratDFLlaveMDDefensivo, specDFLlaveMDDefensivo);
+            Estrategias.Add(stratMetodoLeo, specMetodoLeo);
+            Estrategias.Add(stratPorteroFull, specPorteroFull);
+            Estrategias.Add(stratPorterosLeo, specPorterosLeo);
+
             InitializeComponent();
         }
+
+        ushort Maxtotal99 = 0;
+        ushort StatsTotal99 = 0;
 
         public int PrestigePointsOffset = 0;
         public int FriendshipPointsOffset = 0;
@@ -401,6 +462,7 @@ namespace Inazuma_Eleven_Toolbox.Forms
                 comboBox6.Items.Add(x.Value);
             }
 
+
             // Init This Before executing the for loop, should save some time
             byte[] block = new byte[length];
             if (j < 100)
@@ -409,10 +471,14 @@ namespace Inazuma_Eleven_Toolbox.Forms
                 block = ModifiedBlock.Skip((j * length) + PlayerStartOffset).Take(length).ToArray();
 
                 uint EXP = BitConverter.ToUInt32(block.Skip(0x0).Take(4).ToArray(), 0);
-                short PlayerHEX = BitConverter.ToInt16(block.Skip(0x4).Take(2).ToArray(), 0);
+                Int16 PlayerHEX = BitConverter.ToInt16(block.Skip(0x4).Take(2).ToArray(), 0);
 
-                // Make this bit a little more efficient / look cleaner by using for loops
-                ushort[] ConsumablePoints = new ushort[2];
+
+             
+
+
+                    // Make this bit a little more efficient / look cleaner by using for loops
+                    ushort[] ConsumablePoints = new ushort[2];
                 ushort[] TrainedConsumablePoints = new ushort[2];
                 // This is for FP and TP
                 for (int i = 0; i < 4; i += 2)
@@ -476,15 +542,10 @@ namespace Inazuma_Eleven_Toolbox.Forms
                 SetMoveLevels(numericUpDown6, Move6EvolveType, moveLevel[5]);
 
 
-                ushort MinKick = block[0x10];
                 ushort MaxKick = block[0x11];
-                ushort MinBody = block[0x14];
                 ushort MaxBody = block[0x15];
-                ushort MinGuard = block[0x18];
                 ushort MaxGuard = block[0x19];
-                ushort MinControl = block[0x1C];
                 ushort MaxControl = block[0x1D];
-                ushort MinSpeed = block[0x20];
                 ushort MaxSpeed = block[0x21];
                 ushort MinGuts = block[0x24];
                 ushort MaxGuts = block[0x25];
@@ -507,7 +568,65 @@ namespace Inazuma_Eleven_Toolbox.Forms
                 }
 
                 numericUpDown7.Value = PlayerLevel;
+
+
+                //Player Stats With out nothing
+
+                string PlayerNamesFileName = @"Game Files/EUR/IE3/unitbase.dat";
+                string StatsFileName = @"Game Files/EUR/IE3/unitstat.dat";
+
+                int UnitBaseEnd = 0;
+                int UnitStatsLengthBlock = 0;
+                int UnitBaseLengthPerBlock = 0;
+
+                UnitBaseEnd = 0x3C678; // end is actually at 0x3C678 however these players are unobtainable EDIT: Team Ogre attacks only!
+                UnitBaseLengthPerBlock = 0x68;
+                UnitStatsLengthBlock = 0x48;
+
+                byte[] NameFile = FileIO.ReadFile(PlayerNamesFileName);
+                byte[] StatsFile = FileIO.ReadFile(StatsFileName);
+
+
+                byte[] NameBlock = new byte[UnitBaseLengthPerBlock];
+                byte[] StatsBlock = new byte[UnitStatsLengthBlock];
+
+                string FullPlayerName = "";
+                string PlayerNickName = "";
+
+   
+                for (int i = UnitBaseLengthPerBlock; i <= UnitBaseEnd; i += UnitBaseLengthPerBlock)
+                {
+                    NameBlock = NameFile.Skip(i).Take(UnitBaseLengthPerBlock).ToArray();
+                    
+                    FullPlayerName = TextDecoder.Decode(NameBlock.Skip(0).Take(0x1C).ToArray(), false);
+                    PlayerNickName = TextDecoder.Decode(NameBlock.Skip(0x1C).Take(0x10).ToArray(), false);
+
+                    if (P.HEXToPlayer[PlayerHEX] == PlayerNickName || P.HEXToPlayer[PlayerHEX] == FullPlayerName) {
+
+                        StatsBlock = StatsFile.Skip((i / UnitBaseLengthPerBlock) * UnitStatsLengthBlock).Take(UnitStatsLengthBlock).ToArray();
+                        Cryptography.Decrypt(ref StatsBlock);
+
+
+
+                        heaven.Tiro = StatsBlock[0x11];
+                        heaven.Fisico = StatsBlock[0x15];
+                        heaven.Defensa = StatsBlock[0x19];
+                        heaven.Control = StatsBlock[0x1D];
+                        heaven.Rapidez = StatsBlock[0x21];
+                        heaven.Valor = StatsBlock[0x25];
+                        heaven.Aguante = StatsBlock[0x29];
+
+                        heaven.SumStat = BitConverter.ToUInt16(StatsBlock.Skip(0x3C).Take(2).ToArray(), 0);
+                        heaven.Libertad = (short)(Maxtotal99 - StatsTotal99); // has to be signed since in IE3 it can be negative      
+                    }
+                        
+
+
+                }
+
                 textBox22.Text = P.HEXToPlayer[PlayerHEX];
+                ///////////
+                //Jugador
             }
             else return;
         }
@@ -1086,6 +1205,45 @@ namespace Inazuma_Eleven_Toolbox.Forms
 
             ModifiedBlock = FileIO.WriteData(ModifiedBlock, PlayerOffset + PlayerStartOffset, block, block.Length);
             LoadPlayer();
+        }
+
+        private void comboBox7_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+                HeavenReturn response = new HeavenReturn();
+
+                foreach (var item in Estrategias)
+                {
+                    if (item.Value.IsValid(comboBox7.Text)) {
+                        response = item.Key.Execute(heaven);
+                        break;
+                    }
+                }
+                numericUpDown8.Value = response.Tiro;
+                numericUpDown9.Value = response.Fisico;
+                numericUpDown10.Value = response.Control;
+                numericUpDown11.Value = response.Defensa;
+                numericUpDown12.Value = response.Rapidez;
+                numericUpDown13.Value = response.Aguante;
+                numericUpDown14.Value = response.Valor;
+                
+                SetAttrivutes(DataGridviewIndexFromCell(dataGridView1.CurrentRow.Index));
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox22_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+
+        private void CambiarJugador(Int32 Player)
+        {
+
         }
     }
 }

@@ -30,9 +30,9 @@ namespace Inazuma_Eleven_Toolbox.Forms
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -42,6 +42,8 @@ namespace Inazuma_Eleven_Toolbox.Forms
             this.label3 = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.comboBox7 = new System.Windows.Forms.ComboBox();
+            this.label30 = new System.Windows.Forms.Label();
             this.button9 = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
             this.textBox22 = new System.Windows.Forms.TextBox();
@@ -249,6 +251,8 @@ namespace Inazuma_Eleven_Toolbox.Forms
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.comboBox7);
+            this.tabPage1.Controls.Add(this.label30);
             this.tabPage1.Controls.Add(this.button9);
             this.tabPage1.Controls.Add(this.button8);
             this.tabPage1.Controls.Add(this.textBox22);
@@ -306,6 +310,37 @@ namespace Inazuma_Eleven_Toolbox.Forms
             this.tabPage1.UseVisualStyleBackColor = true;
             this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
             // 
+            // comboBox7
+            // 
+            this.comboBox7.FormattingEnabled = true;
+            this.comboBox7.Items.AddRange(new object[] {
+            "DL Tradicional",
+            "DL Valor",
+            "DL Control",
+            "DL Llave DL",
+            "DL Llave MD",
+            "DL Llave MD Físico",
+            "MEPC",
+            "DF Llave MD Ofensivo",
+            "DF Llave MD Defensivo",
+            "Método Leo",
+            "Portero LLave DL",
+            "Porteros Leo"});
+            this.comboBox7.Location = new System.Drawing.Point(281, 11);
+            this.comboBox7.Name = "comboBox7";
+            this.comboBox7.Size = new System.Drawing.Size(112, 21);
+            this.comboBox7.TabIndex = 50;
+            this.comboBox7.SelectedIndexChanged += new System.EventHandler(this.comboBox7_SelectedIndexChanged);
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Location = new System.Drawing.Point(195, 15);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(80, 13);
+            this.label30.TabIndex = 49;
+            this.label30.Text = "Entrenamientos";
+            // 
             // button9
             // 
             this.button9.Location = new System.Drawing.Point(205, 305);
@@ -332,6 +367,7 @@ namespace Inazuma_Eleven_Toolbox.Forms
             this.textBox22.Name = "textBox22";
             this.textBox22.Size = new System.Drawing.Size(131, 20);
             this.textBox22.TabIndex = 46;
+            this.textBox22.TextChanged += new System.EventHandler(this.textBox22_TextChanged);
             // 
             // label26
             // 
@@ -1252,9 +1288,9 @@ namespace Inazuma_Eleven_Toolbox.Forms
             // 
             // Column4
             // 
-            dataGridViewCellStyle1.Format = "N0";
-            dataGridViewCellStyle1.NullValue = null;
-            this.Column4.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle4.Format = "N0";
+            dataGridViewCellStyle4.NullValue = null;
+            this.Column4.DefaultCellStyle = dataGridViewCellStyle4;
             this.Column4.HeaderText = "Level";
             this.Column4.MaxInputLength = 2;
             this.Column4.Name = "Column4";
@@ -1334,18 +1370,18 @@ namespace Inazuma_Eleven_Toolbox.Forms
             // 
             // Column6
             // 
-            dataGridViewCellStyle2.Format = "N0";
-            dataGridViewCellStyle2.NullValue = null;
-            this.Column6.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle5.Format = "N0";
+            dataGridViewCellStyle5.NullValue = null;
+            this.Column6.DefaultCellStyle = dataGridViewCellStyle5;
             this.Column6.HeaderText = "Amount";
             this.Column6.MaxInputLength = 2;
             this.Column6.Name = "Column6";
             // 
             // Column7
             // 
-            dataGridViewCellStyle3.Format = "X2";
-            dataGridViewCellStyle3.NullValue = null;
-            this.Column7.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle6.Format = "X2";
+            dataGridViewCellStyle6.NullValue = null;
+            this.Column7.DefaultCellStyle = dataGridViewCellStyle6;
             this.Column7.HeaderText = "HEX ID";
             this.Column7.Name = "Column7";
             this.Column7.ReadOnly = true;
@@ -1624,5 +1660,7 @@ namespace Inazuma_Eleven_Toolbox.Forms
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
+        private System.Windows.Forms.ComboBox comboBox7;
+        private System.Windows.Forms.Label label30;
     }
 }

@@ -8,7 +8,7 @@ namespace Inazuma_Eleven_Toolbox.Dictionaries.ENG
 {
     public class PlayerFuncs
     {
-        public IDictionary<int, string> HEXToPlayer = new Dictionary<int, string>
+        public IDictionary<Int16, string> HEXToPlayer = new Dictionary<Int16, string>
         {
             {0x0, "Empty" },
             { 0x01, "Mark Evans"},
